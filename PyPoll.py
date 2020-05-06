@@ -13,6 +13,15 @@ file_to_load = os.path.join("resources", "election_results.csv")
 #ASsign a variable to save the file to a path. 
 file_to_save = os.path.join("analysis", "election_analysis.txt")
 
+#global declaration
+total_votes = 0
+candidate_options = []
+candidate_votes = {}
+vote_percentages = []
+winning_candidate = ""
+winning_count = 0
+winning_percentage = 0
+
 #open the election results and read the file.
 with open(file_to_load) as election_data:
 
@@ -23,7 +32,43 @@ with open(file_to_load) as election_data:
     headers = next(file_reader)
     print(headers, "\n")
 
-    #for row in file_reader:
+    #loop over each line in election_data
+    for row in file_reader:
+        total_votes += 1
+
+        #get list of candidate names, begin tracking votes for new candiate in dictionary
+        candidate_name = row[2]
+        if candidate_name not in candidate_options:
+            candidate_options.append(candidate_name)
+            candidate_votes[candidate_name] = 0
+
+        #increment the vote ti candidate's count
+        candidate_votes[candidate_name] += 1
+
+#calculate percentage of total votes per candidate
+for candidate in candidate_votes:
+    votes = candidate_votes[candidate]
+    vote_percentage = float(votes) / float(total_votes) * 100
+    vote_percentages.append(f"{candidate}: {vote_percentage:.2f}") 
+    print(f"{candidate}:  {vote_percentage:.2f}%,  ({votes})")
+
+    #determine if canditate is the current leader
+    if (votes > winning_count) and (vote_percentage > winning_percentage):
+        winning_count = votes
+        winning_percentage = vote_percentage
+        winning_candidate = candidate
+
+print("\n")
+print(vote_percentages)
+
+#winning printout
+winning_candidate_summary = (
+    f"-------------------------\n"
+    f"Winner: {winning_candidate}\n"
+    f"Winning Vote Count: {winning_count:,}\n"
+    f"Winning Percentage: {winning_percentage:.1f}%\n"
+    f"-------------------------\n")
+print(winning_candidate_summary)
 
 
 
