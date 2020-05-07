@@ -45,41 +45,47 @@ with open(file_to_load) as election_data:
         #increment the vote ti candidate's count
         candidate_votes[candidate_name] += 1
 
-#calculate percentage of total votes per candidate
-for candidate in candidate_votes:
-    votes = candidate_votes[candidate]
-    vote_percentage = float(votes) / float(total_votes) * 100
-    vote_percentages.append(f"{candidate}: {vote_percentage:.2f}") 
-    print(f"{candidate}:  {vote_percentage:.2f}%,  ({votes})")
-
-    #determine if canditate is the current leader
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        winning_count = votes
-        winning_percentage = vote_percentage
-        winning_candidate = candidate
-
-print("\n")
-print(vote_percentages)
-
-#winning printout
-winning_candidate_summary = (
-    f"-------------------------\n"
-    f"Winner: {winning_candidate}\n"
-    f"Winning Vote Count: {winning_count:,}\n"
-    f"Winning Percentage: {winning_percentage:.1f}%\n"
-    f"-------------------------\n")
-print(winning_candidate_summary)
-
-
-
-
-
-
-
-
 #using the with statement with open the file as a text file
 with open(file_to_save, "w") as txt_file:
-    txt_file.write("Hello World")
+
+    election_results = (
+        f"\nelection Results\n"
+        f"--------------------------\n"
+        f"Total Votes: {total_votes:,}\n"
+        f"--------------------------\n")
+    #ends print with an empty sting instead of \n new line
+    print(election_results, end="")
+    txt_file.write(election_results)    
+
+
+    #calculate percentage of total votes per candidate
+    for candidate in candidate_votes:
+        votes = candidate_votes[candidate]
+        vote_percentage = float(votes) / float(total_votes) * 100
+        vote_percentages.append(f"{candidate}: {vote_percentage:.2f}") 
+        candidate_results = (f"{candidate}:  {vote_percentage:.1f}%,  ({votes:,})\n")
+        
+        #print candidate results to the terminal, and txt file
+        print(candidate_results)
+        txt_file.write(candidate_results)
+
+        #determine if canditate is the current leader
+        if (votes > winning_count) and (vote_percentage > winning_percentage):
+            winning_count = votes
+            winning_percentage = vote_percentage
+            winning_candidate = candidate
+
+
+    #winning printout and txt file write
+    winning_candidate_summary = (
+        f"-------------------------\n"
+        f"Winner: {winning_candidate}\n"
+        f"Winning Vote Count: {winning_count:,}\n"
+        f"Winning Percentage: {winning_percentage:.1f}%\n"
+        f"-------------------------\n")
+    print(winning_candidate_summary)
+    txt_file.write(winning_candidate_summary)
+
 
 
 
