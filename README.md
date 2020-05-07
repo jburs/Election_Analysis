@@ -20,6 +20,11 @@ The analysis of the elction showed that:
 The Winner of the election was Diana DeGette, with 272,892 votes, totalling 73.8% of the votes. 
 
 ## Challenge Overview
-
+    Added an analysis to find the number of votes from each county, and percentage of total votes each county was responsible for. 
+    
 ## Challenge Summary
-
+    Jefferson county: 38,855 total votes, 10.5% of the total vote. 
+    Denver County: 306,055 votes, 82.8% of the total vote. 
+    Arapahow County: 24,801 votes, 6.7% of the total vote. 
+    
+    Denver had the largers number of votes totalling 82.8% of the total votes. 
